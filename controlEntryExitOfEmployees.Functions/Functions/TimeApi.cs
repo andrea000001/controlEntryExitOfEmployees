@@ -110,5 +110,56 @@ namespace controlEntryExitOfEmployees.Functions.Functions
                 Result = employeeEntity
             });
         }
+
+        [FunctionName(nameof(GetAllTimes))]
+        public static async Task<IActionResult> GetAllTimes(
+           [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "time")] HttpRequest req,
+           [Table("time", Connection = "AzureWebJobsStorage")] CloudTable timeTable,
+           ILogger log)
+        {
+            log.LogInformation("Get all timed received.");
+
+            TableQuery<EmployeeEntity> query = new TableQuery<EmployeeEntity>();
+            TableQuerySegment<EmployeeEntity> times = await timeTable.ExecuteQuerySegmentedAsync(query, null);
+
+            string message = "Retrieved all times.";
+            log.LogInformation(message);
+
+            return new OkObjectResult(new Response
+            {
+                IsSuccess = true,
+                Message = message,
+                Result = times
+            });
+        }
+
+        [FunctionName(nameof(GetTimeById))]
+        public static IActionResult GetTimeById(
+           [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "time/{id}")] HttpRequest req,
+           [Table("time","TIME","{id}",Connection = "AzureWebJobsStorage")] EmployeeEntity employeeEntity,
+           string id,
+           ILogger log)
+        {
+            log.LogInformation($"Get time by id: {id}, received.");
+
+            if (employeeEntity == null)
+            {
+                return new BadRequestObjectResult(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Time not found."
+                });
+            }
+
+            string message = $"Time: {id}, retrieved.";
+            log.LogInformation(message);
+
+            return new OkObjectResult(new Response
+            {
+                IsSuccess = true,
+                Message = message,
+                Result = employeeEntity
+            });
+        }
     }
 }
