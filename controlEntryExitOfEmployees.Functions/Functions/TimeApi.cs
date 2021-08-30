@@ -161,5 +161,36 @@ namespace controlEntryExitOfEmployees.Functions.Functions
                 Result = employeeEntity
             });
         }
+
+        [FunctionName(nameof(DeleteTime))]
+        public static async Task<IActionResult> DeleteTime(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "time/{id}")] HttpRequest req,
+            [Table("time", "TIME", "{id}", Connection = "AzureWebJobsStorage")] EmployeeEntity employeeEntity,
+            [Table("time", Connection = "AzureWebJobsStorage")] CloudTable timeTable,
+            string id,
+            ILogger log)
+        {
+            log.LogInformation($"Delete time: {id}, received.");
+
+            if (employeeEntity == null)
+            {
+                return new BadRequestObjectResult(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Time not found."
+                });
+            }
+
+            await timeTable.ExecuteAsync(TableOperation.Delete(employeeEntity));
+            string message = $"Time: {id}, deleted.";
+            log.LogInformation(message);
+
+            return new OkObjectResult(new Response
+            {
+                IsSuccess = true,
+                Message = message,
+                Result = employeeEntity
+            });
+        }
     }
 }
