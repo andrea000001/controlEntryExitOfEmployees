@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "controlEntryExitOfEmployees.Common", "controlEntryExitOfEmployees.Common\controlEntryExitOfEmployees.Common.csproj", "{B49167A3-8009-4F4B-9938-98259451368B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "controlEntryExitOfEmployees.Common", "controlEntryExitOfEmployees.Common\controlEntryExitOfEmployees.Common.csproj", "{B49167A3-8009-4F4B-9938-98259451368B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "controlEntryExitOfEmployees.Functions", "controlEntryExitOfEmployees.Functions\controlEntryExitOfEmployees.Functions.csproj", "{39F36D56-CD97-4245-A5CF-0A60A966DB95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "controlEntryExitOfEmployees.Functions", "controlEntryExitOfEmployees.Functions\controlEntryExitOfEmployees.Functions.csproj", "{39F36D56-CD97-4245-A5CF-0A60A966DB95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "controlEntryExitOfEmployees.Test", "controlEntryExitOfEmployees.Test\controlEntryExitOfEmployees.Test.csproj", "{F901A7AF-A567-4E3A-BE93-F7529FE1C331}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "controlEntryExitOfEmployees.Test", "controlEntryExitOfEmployees.Test\controlEntryExitOfEmployees.Test.csproj", "{F901A7AF-A567-4E3A-BE93-F7529FE1C331}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

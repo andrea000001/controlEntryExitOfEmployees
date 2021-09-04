@@ -27,7 +27,7 @@ namespace controlEntryExitOfEmployees.Functions.Functions
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Employee employee = JsonConvert.DeserializeObject<Employee>(requestBody);
 
-                if (employee == null || employee.EmployeId == -1 || employee.Type == -1 || employee.Date.Year == 1)
+                if (employee == null || employee?.EmployeId == null || employee?.Type == null || employee?.Date == null)
                 {
                     return new BadRequestObjectResult(new Response
                     {
@@ -38,9 +38,9 @@ namespace controlEntryExitOfEmployees.Functions.Functions
 
             EmployeeEntity employeeEntity = new EmployeeEntity
             {
-                EmployeId = employee.EmployeId,
-                Date = employee.Date,
-                Type = employee.Type,
+                EmployeId = (int)employee.EmployeId,
+                Date = (DateTime)employee.Date,
+                Type = (int)employee.Type,
                 IsConsolidated = false,
                 ETag = "*",
                 PartitionKey = "TIME",
@@ -90,11 +90,11 @@ namespace controlEntryExitOfEmployees.Functions.Functions
             EmployeeEntity employeeEntity = (EmployeeEntity)findResult.Result;
             employeeEntity.IsConsolidated = employee.IsConsolidated;
 
-            if (employee != null || employee.EmployeId != -1 || employee.Type != -1 || employee.Date.Year != 1)
+            if (employee != null || employee?.EmployeId != null || employee?.Type != null || employee?.Date != null)
             {
-                employeeEntity.EmployeId = employee.EmployeId;
-                employeeEntity.Type = employee.Type;
-                employeeEntity.Date = employee.Date;
+                employeeEntity.EmployeId = (int)employee.EmployeId;
+                employeeEntity.Type = (int)employee.Type;
+                employeeEntity.Date = (DateTime)employee.Date;
             }
 
             TableOperation addOperation = TableOperation.Replace(employeeEntity);
@@ -121,7 +121,7 @@ namespace controlEntryExitOfEmployees.Functions.Functions
 
             TableQuery<EmployeeEntity> query = new TableQuery<EmployeeEntity>();
             TableQuerySegment<EmployeeEntity> times = await timeTable.ExecuteQuerySegmentedAsync(query, null);
-
+            
             string message = "Retrieved all times.";
             log.LogInformation(message);
 
