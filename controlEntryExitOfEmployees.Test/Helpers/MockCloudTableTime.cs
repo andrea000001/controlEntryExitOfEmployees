@@ -1,8 +1,11 @@
-﻿using Microsoft.WindowsAzure.Storage;
+﻿using controlEntryExitOfEmployees.Functions.Entities;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,5 +33,19 @@ namespace controlEntryExitOfEmployees.Test.Helpers
                 Result = TestFactory.GetEmployeeEntity()
             });
         }
+
+        List<EmployeeEntity> results = new List<EmployeeEntity>() { TestFactory.GetEmployeeEntity() };
+        public override async Task<TableQuerySegment<EmployeeEntity>> ExecuteQuerySegmentedAsync<EmployeeEntity>(
+            TableQuery<EmployeeEntity> query, 
+            TableContinuationToken token)
+        {
+            var ctor = typeof(TableQuerySegment<EmployeeEntity>)
+                .GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
+                .FirstOrDefault(c => c.GetParameters().Count() == 1);
+
+            TableQuerySegment<EmployeeEntity> mock = ctor.Invoke(new object[] { results }) as TableQuerySegment<EmployeeEntity>;
+
+            return await Task.Run(() => mock);
+        }        
     }
 }

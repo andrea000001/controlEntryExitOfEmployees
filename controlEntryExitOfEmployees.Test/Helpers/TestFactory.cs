@@ -26,21 +26,21 @@ namespace controlEntryExitOfEmployees.Test.Helpers
             };
         }
 
-        public static DefaultHttpRequest CreateHttpRequest(Guid employeId, Employee employeeRequest)
+        public static DefaultHttpRequest CreateHttpRequest(Guid rowKey, Employee employeeRequest)
         {
             string request = JsonConvert.SerializeObject(employeeRequest);
             return new DefaultHttpRequest(new DefaultHttpContext())
             {
                 Body = GenerateStreamFromString(request),
-                Path = $"/{employeId}"
+                Path = $"/{rowKey}"
             };
         }
 
-        public static DefaultHttpRequest CreateHttpRequest(Guid employeId)
+        public static DefaultHttpRequest CreateHttpRequest(Guid rowKey)
         {
             return new DefaultHttpRequest(new DefaultHttpContext())
             {
-                Path = $"/{employeId}"
+                Path = $"/{rowKey}"
             };
         }
 
@@ -62,8 +62,8 @@ namespace controlEntryExitOfEmployees.Test.Helpers
         {
             return new Employee
             {
-                EmployeId = 2,
-                Date = new DateTime(2021, 08, 10, 8, 0, 0),
+                EmployeId = 1,
+                Date = new DateTime(2021, 08, 10, 6, 0, 0),
                 Type = 0,
                 IsConsolidated = false
             };
