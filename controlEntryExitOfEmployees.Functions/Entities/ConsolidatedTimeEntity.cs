@@ -5,7 +5,7 @@ using System.Text;
 
 namespace controlEntryExitOfEmployees.Functions.Entities
 {
-    class ConsolidatedTimeEntity : TableEntity
+    public class ConsolidatedTimeEntity : TableEntity
     {
         public int EmployeId { get; set; }
 
