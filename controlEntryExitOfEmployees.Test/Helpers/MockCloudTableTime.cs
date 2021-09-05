@@ -34,7 +34,6 @@ namespace controlEntryExitOfEmployees.Test.Helpers
             });
         }
 
-        List<EmployeeEntity> results = new List<EmployeeEntity>() { TestFactory.GetEmployeeEntity() };
         public override async Task<TableQuerySegment<EmployeeEntity>> ExecuteQuerySegmentedAsync<EmployeeEntity>(
             TableQuery<EmployeeEntity> query, 
             TableContinuationToken token)
@@ -43,7 +42,7 @@ namespace controlEntryExitOfEmployees.Test.Helpers
                 .GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)
                 .FirstOrDefault(c => c.GetParameters().Count() == 1);
 
-            TableQuerySegment<EmployeeEntity> mock = ctor.Invoke(new object[] { results }) as TableQuerySegment<EmployeeEntity>;
+            TableQuerySegment<EmployeeEntity> mock = ctor.Invoke(new object[] { TestFactory.GetListEmployeeEntity() }) as TableQuerySegment<EmployeeEntity>;
 
             return await Task.Run(() => mock);
         }        

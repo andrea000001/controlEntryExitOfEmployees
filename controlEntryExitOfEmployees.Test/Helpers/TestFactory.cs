@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace controlEntryExitOfEmployees.Test.Helpers
@@ -24,6 +25,28 @@ namespace controlEntryExitOfEmployees.Test.Helpers
                 Type = 0,
                 IsConsolidated = false,
             };
+        }
+
+
+        public static List<EmployeeEntity> GetListEmployeeEntity()
+        {
+            List<EmployeeEntity> employeeEntities = new List<EmployeeEntity>()
+            {
+                GetEmployeeEntity(),
+
+                new EmployeeEntity
+                {
+                    ETag = "*",
+                    PartitionKey = "TIME",
+                    RowKey = Guid.NewGuid().ToString(),
+                    EmployeId = 1,
+                    Date = new DateTime(2021, 08, 10, 13, 0, 0),
+                    Type = 1,
+                    IsConsolidated = false,
+                }
+            };
+
+            return employeeEntities;
         }
 
         public static DefaultHttpRequest CreateHttpRequest(Guid rowKey, Employee employeeRequest)
